@@ -1,9 +1,12 @@
-export function createEntry(data = {}) {
+import { generateId } from "../utils/ids.js";
+
+export function createLabel(data = {}) {
 	return {
-		id: "",
+		id: generateId(),
 		name: "",
 		url: "",
 		color: "",
-		isPrimary: false
+		isPrimary: false,
+		...data,
 	};
 }

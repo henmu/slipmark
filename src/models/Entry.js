@@ -1,15 +1,17 @@
+import { generateId } from "../utils/ids.js";
+
 export function createEntry(data = {}) {
 	const now = Date.now();
 
 	return {
-		id: "",
+		id: generateId(),
 		title: "",
 		url: "",
 		image: "",
 		notes: "",
 		labels: [],
-		createdAt: now,
-		modifiedAt: now,
+		created: now,
+		modified: now,
 		...data,
 	};
 }

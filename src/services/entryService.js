@@ -1,4 +1,6 @@
 import {createEntry} from "../models/Entry.js";
+import { addEntry } from "../storage/entries.js";
+
 import * as entries from "../storage/entries.js";
 
 export async function create(data) {
@@ -17,4 +19,15 @@ export async function get(id) {
 
 export async function remove(id) {
 	return await entries.deleteEntry(id);
+}
+
+export async function saveCurrentTab(tab) {
+	const entry = createEntry({
+		title: tab.title ?? "",
+		url: tab.url ?? ""
+	});
+
+	await addEntry(entry);
+
+	return entry;
 }
