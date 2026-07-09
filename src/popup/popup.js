@@ -13,6 +13,7 @@ button.addEventListener("click", async () => {
 
 
 	const result = await saveFromTab(tab);
+	console.log(result);
 
 
 	//TODO: Remove this when we have a proper UI for duplicates
