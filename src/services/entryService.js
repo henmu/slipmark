@@ -1,15 +1,13 @@
 import {createEntry} from "../models/Entry.js";
 import { addEntry } from "../storage/entries.js";
 import { findDuplicate } from "./duplicateService.js";
+import { extractMetadata } from "../metadata/index.js";
 
 import * as entries from "../storage/entries.js";
 
 export async function saveFromTab(tab) {
-	const entry = createEntry({
-		title: tab.title ?? "",
-		url: tab.url ?? "",
-		image: tab.favIconUrl ?? ""
-	});
+	const metadata = await extractMetadata(tab);
+	const entry = createEntry(metadata);
 
 	const duplicate = await findDuplicate(entry);
 

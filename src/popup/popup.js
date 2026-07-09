@@ -15,6 +15,7 @@ button.addEventListener("click", async () => {
 	const result = await saveFromTab(tab);
 
 
+	//TODO: Remove this when we have a proper UI for duplicates
 	if (result.isDuplicate) {
 		console.log("This entry already exists!");
 	} else {
