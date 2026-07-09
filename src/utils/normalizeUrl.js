@@ -1,8 +1,16 @@
 export function normalizeUrl(url) {
-	const parsed = new URL(url);
+	try {
+		const parsedUrl = new URL(url);
 
-	parsed.hash = "";
-	parsed.search = "";
+		//Remove fragments
+		parsedUrl.hash = "";
 
-	return parsed.toString().replace(/\/$/, "");
+		//Remove tracking/query parameters (e.g., utm_source, utm_medium, utm_campaign)
+		parsedUrl.search = "";
+
+		// Remove trailing slashes
+		return parsedUrl.toString().replace(/\/$/, "");
+	} catch {
+		return url;
+	}
 }
