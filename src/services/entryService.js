@@ -1,12 +1,31 @@
 import {createEntry} from "../models/Entry.js";
 import { addEntry } from "../storage/entries.js";
+import { findDuplicate } from "./duplicateService.js";
 
 import * as entries from "../storage/entries.js";
 
-export async function create(data) {
-	const entry = createEntry(data);
+export async function saveFromTab(tab) {
+	const entry = createEntry({
+		title: tab.title ?? "",
+		url: tab.url ?? "",
+		image: tab.favIconUrl ?? ""
+	});
 
-	return await entries.addEntry(entry);
+	const duplicate = await findDuplicate(entry);
+
+	if (duplicate) {
+		return {
+			entry: duplicate,
+			isDuplicate: true
+		};
+	}
+
+	await addEntry(entry);
+
+	return {
+		entry,
+		isDuplicate: false
+	};
 }
 
 export async function getAll() {
@@ -21,13 +40,3 @@ export async function remove(id) {
 	return await entries.deleteEntry(id);
 }
 
-export async function saveCurrentTab(tab) {
-	const entry = createEntry({
-		title: tab.title ?? "",
-		url: tab.url ?? ""
-	});
-
-	await addEntry(entry);
-
-	return entry;
-}

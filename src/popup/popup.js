@@ -1,8 +1,9 @@
-import { saveCurrentTab } from "../services/entryService.js";
+import { saveFromTab, getAll } from "../services/entryService.js";
 
-import { getDatabase } from "../storage/database.js";
+import { createEntryElement } from "./components/entryItem.js";
 
 const button = document.querySelector("#save-current");
+const entriesContainer = document.querySelector("#entries");
 
 button.addEventListener("click", async () => {
 	const [tab] = await browser.tabs.query({
@@ -10,8 +11,27 @@ button.addEventListener("click", async () => {
 		currentWindow: true,
 	});
 
-	const entry = await saveCurrentTab(tab);
 
-	console.log("Saved entry:", entry);
-	console.log(await getDatabase());
+	const result = await saveFromTab(tab);
+
+
+	if (result.isDuplicate) {
+		console.log("This entry already exists!");
+	} else {
+		console.log("Entry saved successfully!");
+	}
+
+	await renderEntries();
 });
+
+async function renderEntries() {
+	const entries = await getAll();
+
+	entriesContainer.innerHTML = "";
+
+	entries.forEach(entry => {
+		entriesContainer.appendChild(createEntryElement(entry));
+	});
+}
+
+await renderEntries();
