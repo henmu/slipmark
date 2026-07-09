@@ -1,4 +1,6 @@
 export function createEntry(data = {}) {
+	const now = Date.now();
+
 	return {
 		id: "",
 		title: "",
@@ -6,8 +8,8 @@ export function createEntry(data = {}) {
 		image: "",
 		notes: "",
 		labels: [],
-		createdAt: Date.now(),
-		modifiedAt: Date.now(),
+		createdAt: now,
+		modifiedAt: now,
 		...data,
 	};
 }

@@ -1,0 +1,34 @@
+{
+	"manifest_version": 3,
+	"name": "Slipmark",
+	"description": "Save webpages as structured entries instead of traditional bookmarks.",
+	"version": "0.1.0",
+
+	"permissions": [
+		"storage",
+		"tabs",
+		"scripting"
+	],
+
+	"host_permissions": [
+		"<all_urls>"
+	],
+
+	"background": {
+		"scripts": [
+			"background/index.js"
+		]
+	},
+
+	"action": {
+		"default_title": "Slipmark",
+		"default_popup": "popup/popup.html"
+	},
+
+	"browser_specific_settings": {
+		"gecko": {
+			"id": "slipmark@example.com",
+			"strict_min_version": "109.0"
+		}
+	}
+}
